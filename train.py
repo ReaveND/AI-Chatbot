@@ -174,7 +174,7 @@ def main():
         optimizer, factor=0.5, patience=20
     )
 
-    best_val_loss = float("inf")
+    best_train_loss = float("inf")
     epochs_without_improvement = 0
     os.makedirs(MODEL_DIR, exist_ok=True)
 
@@ -214,8 +214,8 @@ def main():
                 f"TF: {teacher_forcing_ratio:.3f} | LR: {lr_now:.6f}"
             )
 
-        if val_loss < best_val_loss:
-            best_val_loss = val_loss
+        if train_loss < best_train_loss:
+            best_train_loss = train_loss
             epochs_without_improvement = 0
             torch.save(encoder.state_dict(), os.path.join(MODEL_DIR, "encoder.pt"))
             torch.save(decoder.state_dict(), os.path.join(MODEL_DIR, "decoder.pt"))
@@ -230,7 +230,7 @@ def main():
             )
             break
 
-    print(f"\nTraining complete! Best validation loss: {best_val_loss:.4f}")
+    print(f"\nTraining complete! Best train loss: {best_train_loss:.4f}")
     print(f"Model saved to '{MODEL_DIR}/'")
 
 

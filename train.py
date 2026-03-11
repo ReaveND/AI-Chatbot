@@ -119,7 +119,7 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
     criterion = nn.CrossEntropyLoss(ignore_index=Vocabulary.PAD_token)
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, factor=0.5, patience=30, verbose=False
+        optimizer, factor=0.5, patience=30
     )
 
     best_loss = float("inf")
@@ -131,7 +131,7 @@ def main():
         avg_loss = train_epoch(model, pairs, vocab, optimizer, criterion)
         scheduler.step(avg_loss)
 
-        if epoch % 50 == 0 or epoch == 1:
+        if epoch % 10 == 0 or epoch == 1:
             lr_now = optimizer.param_groups[0]["lr"]
             print(f"Epoch {epoch:4d}/{EPOCHS}  |  Loss: {avg_loss:.4f}  |  LR: {lr_now:.6f}")
 

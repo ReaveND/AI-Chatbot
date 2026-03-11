@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deep Learning Chatbot</title>
+  <style>
+    /* ── Reset & Base ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0f1117;
+      --surface:     #1a1d27;
+      --surface2:    #22263a;
+      --accent:      #4f8ef7;
+      --accent-dark: #3a6fd8;
+      --text:        #e4e6f0;
+      --text-muted:  #8890aa;
+      --bot-bubble:  #22263a;
+      --user-bubble: #4f8ef7;
+      --border:      #2d3148;
+      --shadow:      0 4px 24px rgba(0,0,0,0.4);
+      --radius:      16px;
+      --radius-sm:   8px;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header ────────────────────────────────────────────────────────── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .header-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f8ef7, #a66cf7);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .header-info h1 {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: .3px;
+    }
+
+    .header-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      margin-right: 4px;
+      animation: pulse 2s infinite;
+    }
+
+    .status-dot.offline { background: #ef4444; animation: none; }
+    .status-dot.loading { background: #f59e0b; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .45; }
+    }
+
+    .header-badge {
+      margin-left: auto;
+      font-size: 10px;
+      background: linear-gradient(135deg, #4f8ef766, #a66cf744);
+      border: 1px solid #4f8ef755;
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: .5px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* ── Messages area ─────────────────────────────────────────────────── */
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scroll-behavior: smooth;
+    }
+
+    #messages::-webkit-scrollbar { width: 5px; }
+    #messages::-webkit-scrollbar-track { background: transparent; }
+    #messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+    /* ── Message rows ──────────────────────────────────────────────────── */
+    .msg-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      max-width: 78%;
+      animation: fadeUp .25s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg-row.bot  { align-self: flex-start; }
+    .msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
+
+    .avatar {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    .bot .avatar  { background: linear-gradient(135deg, #4f8ef7, #a66cf7); }
+    .user .avatar { background: linear-gradient(135deg, #4f8ef7, #22d3ee); }
+
+    .bubble {
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      line-height: 1.55;
+      word-break: break-word;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+
+    .bot .bubble {
+      background: var(--bot-bubble);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      color: var(--text);
+    }
+
+    .user .bubble {
+      background: var(--user-bubble);
+      border-bottom-right-radius: 4px;
+      color: #fff;
+    }
+
+    /* ── Typing indicator ──────────────────────────────────────────────── */
+    .typing-bubble {
+      padding: 12px 16px;
+      display: flex; gap: 5px; align-items: center;
+    }
+
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      animation: bounce .9s infinite;
+    }
+    .dot:nth-child(2) { animation-delay: .15s; }
+    .dot:nth-child(3) { animation-delay: .30s; }
+
+    @keyframes bounce {
+      0%, 70%, 100% { transform: translateY(0); }
+      35%            { transform: translateY(-6px); }
+    }
+
+    /* ── Welcome banner ────────────────────────────────────────────────── */
+    .welcome {
+      text-align: center;
+      margin: 20px auto 10px;
+      color: var(--text-muted);
+    }
+    .welcome h2 { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .welcome p  { font-size: 13px; max-width: 360px; margin: 0 auto; }
+
+    /* ── Suggestions ───────────────────────────────────────────────────── */
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 12px 0 4px;
+    }
+
+    .chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .chip:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* ── Input bar ─────────────────────────────────────────────────────── */
+    .input-area {
+      padding: 12px 16px 16px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 6px 6px 6px 16px;
+      transition: border-color .2s;
+    }
+
+    .input-row:focus-within { border-color: var(--accent); }
+
+    #userInput {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-size: 14px;
+      resize: none;
+      max-height: 120px;
+      font-family: inherit;
+      line-height: 1.5;
+      padding: 4px 0;
+    }
+
+    #userInput::placeholder { color: var(--text-muted); }
+
+    #sendBtn {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), #a66cf7);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: opacity .2s, transform .15s;
+    }
+
+    #sendBtn:hover:not(:disabled) { opacity: .88; transform: scale(1.07); }
+    #sendBtn:disabled { opacity: .4; cursor: not-allowed; }
+
+    .input-hint {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 7px;
+    }
+
+    /* ── Error toast ───────────────────────────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #ef4444;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all .3s;
+      z-index: 999;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (min-width: 640px) {
+      body { max-width: 700px; margin: 0 auto; }
+      #messages { padding: 24px 24px; }
+      .input-area { padding: 14px 24px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-avatar">🤖</div>
+  <div class="header-info">
+    <h1>Deep Learning Chatbot</h1>
+    <p><span class="status-dot" id="statusDot"></span><span id="statusText">Connecting...</span></p>
+  </div>
+  <span class="header-badge">LSTM · Seq2Seq</span>
+</header>
+
+<!-- Messages -->
+<div id="messages">
+  <div class="welcome">
+    <h2>Hello! 👋</h2>
+    <p>I'm a generative chatbot trained with a Seq2Seq LSTM deep learning model. Ask me anything!</p>
+  </div>
+  <div class="suggestions" id="suggestions">
+    <span class="chip">Who are you?</span>
+    <span class="chip">What is deep learning?</span>
+    <span class="chip">Tell me a joke</span>
+    <span class="chip">How are you?</span>
+    <span class="chip">What is an LSTM?</span>
+  </div>
+</div>
+
+<!-- Input -->
+<div class="input-area">
+  <div class="input-row">
+    <textarea id="userInput" rows="1" placeholder="Type a message…" autocomplete="off"></textarea>
+    <button id="sendBtn" title="Send (Enter)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
+  </div>
+  <p class="input-hint">Press <kbd style="background:#2d3148;border-radius:3px;padding:1px 5px;font-size:10px">Enter</kbd> to send &nbsp;·&nbsp; <kbd style="background:#2d3148;border-radius:3px;padding:1px 5px;font-size:10px">Shift+Enter</kbd> for new line</p>
+</div>
+
+<div id="toast"></div>
+
+<script>
+  const messagesEl  = document.getElementById("messages");
+  const userInput   = document.getElementById("userInput");
+  const sendBtn     = document.getElementById("sendBtn");
+  const statusDot   = document.getElementById("statusDot");
+  const statusText  = document.getElementById("statusText");
+  const suggestionsEl = document.getElementById("suggestions");
+
+  // ── Status check ───────────────────────────────────────────────────────────
+  async function checkStatus() {
+    try {
+      const res  = await fetch("/status");
+      const data = await res.json();
+      if (data.trained) {
+        statusDot.className  = "status-dot";
+        statusText.textContent = "Online · Model ready";
+      } else {
+        statusDot.className  = "status-dot offline";
+        statusText.textContent = "Model not trained yet";
+        showToast("Run 'python train.py' to train the model first.", 6000);
+      }
+    } catch {
+      statusDot.className  = "status-dot offline";
+      statusText.textContent = "Server unreachable";
+    }
+  }
+
+  checkStatus();
+
+  // ── Auto-resize textarea ───────────────────────────────────────────────────
+  userInput.addEventListener("input", () => {
+    userInput.style.height = "auto";
+    userInput.style.height = Math.min(userInput.scrollHeight, 120) + "px";
+  });
+
+  // ── Suggestion chips ───────────────────────────────────────────────────────
+  suggestionsEl.addEventListener("click", (e) => {
+    if (e.target.classList.contains("chip")) {
+      userInput.value = e.target.textContent;
+      suggestionsEl.style.display = "none";
+      sendMessage();
+    }
+  });
+
+  // ── Send helpers ───────────────────────────────────────────────────────────
+  function appendMessage(text, role) {
+    const row    = document.createElement("div");
+    row.className = `msg-row ${role}`;
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = role === "bot" ? "🤖" : "🧑";
+
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    bubble.textContent = text;
+
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    messagesEl.appendChild(row);
+    scrollToBottom();
+    return row;
+  }
+
+  function showTyping() {
+    const row    = document.createElement("div");
+    row.className = "msg-row bot";
+    row.id = "typing";
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = "🤖";
+
+    const bubble = document.createElement("div");
+    bubble.className = "bubble typing-bubble";
+    bubble.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    messagesEl.appendChild(row);
+    scrollToBottom();
+  }
+
+  function removeTyping() {
+    const el = document.getElementById("typing");
+    if (el) el.remove();
+  }
+
+  function scrollToBottom() {
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function showToast(msg, duration = 3000) {
+    const toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), duration);
+  }
+
+  // ── Core send ──────────────────────────────────────────────────────────────
+  async function sendMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
+
+    suggestionsEl.style.display = "none";
+
+    appendMessage(text, "user");
+    userInput.value = "";
+    userInput.style.height = "auto";
+    sendBtn.disabled = true;
+    showTyping();
+
+    try {
+      const res  = await fetch("/chat", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ message: text }),
+      });
+
+      if (!res.ok) throw new Error("Server error " + res.status);
+      const data = await res.json();
+
+      removeTyping();
+
+      if (data.error) {
+        showToast(data.error, 5000);
+        appendMessage("⚠️ " + data.error, "bot");
+      } else {
+        appendMessage(data.response, "bot");
+      }
+    } catch (err) {
+      removeTyping();
+      showToast("Connection error. Is the server running?", 4000);
+      appendMessage("Sorry, I couldn't connect to the server.", "bot");
+    } finally {
+      sendBtn.disabled = false;
+      userInput.focus();
+    }
+  }
+
+  // ── Event listeners ────────────────────────────────────────────────────────
+  sendBtn.addEventListener("click", sendMessage);
+
+  userInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+</script>
+</body>
+</html>

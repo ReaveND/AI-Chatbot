@@ -203,10 +203,41 @@ class Chatbot:
         )
         return candidates[0][0]
 
+
+    def _to_sentence(self, text: str) -> str:
+        text = text.strip()
+        if not text:
+            return ""
+        if text[-1] not in ".!?":
+            text += "."
+        return text[0].upper() + text[1:]
+
+    def _format_response(self, answer: str) -> str:
+        base = self._to_sentence(answer)
+        if not base:
+            return "I can help with admissions, attendance, fees, exams, and timetable queries.\n\nNext step: please verify this in your ERP dashboard.\nIf you want, I can also guide you with the exact menu path in the ERP portal."
+
+        follow_up = "If you want, I can also guide you with the exact menu path in the ERP portal."
+        return f"{base}\n\nNext step: please verify this in your ERP dashboard.\n{follow_up}"
+
     def respond(self, sentence: str) -> str:
         cleaned = preprocess(sentence)
         if not cleaned:
-            return "Could you rephrase that? I didn't quite catch it."
+            return self._format_response("could you rephrase that i did not quite catch it")
+
+        retrieval_response, retrieval_score = self._retrieve_response(cleaned)
+
+        if self.vocab is not None:
+            query_tokens = cleaned.split()
+            unk_count = sum(1 for token in query_tokens if token not in self.vocab.word2index)
+            unk_ratio = unk_count / max(len(query_tokens), 1)
+            if retrieval_response and (retrieval_score >= RETRIEVAL_CONFIDENCE_THRESHOLD or unk_ratio > MAX_UNKNOWN_RATIO):
+                return self._format_response(retrieval_response)
+        elif retrieval_response:
+            return self._format_response(retrieval_response)
+
+        if self.encoder is None or self.decoder is None or self.vocab is None:
+            return "I can help with admissions, attendance, fees, exams, and timetable queries.\n\nNext step: please verify this in your ERP dashboard.\nIf you want, I can also guide you with the exact menu path in the ERP portal."
 
         retrieval_response, retrieval_score = self._retrieve_response(cleaned)
 
@@ -240,6 +271,12 @@ class Chatbot:
                 response_words.append(word)
 
         if len(response_words) < MIN_RESPONSE_LEN and retrieval_response:
+            return self._format_response(retrieval_response)
+
+        if len(response_words) < MIN_RESPONSE_LEN:
+            return "I can help with admissions, attendance, fees, exams, and timetable queries.\n\nNext step: please verify this in your ERP dashboard.\nIf you want, I can also guide you with the exact menu path in the ERP portal."
+
+        return self._format_response(" ".join(response_words))
             return retrieval_response
 
         if len(response_words) < MIN_RESPONSE_LEN:

@@ -1,0 +1,116 @@
+hello	hi there! how can i help you?
+hi	hello! what can i do for you?
+hey	hey! how can i assist you?
+good morning	good morning! hope you have a great day
+good afternoon	good afternoon! how can i help?
+good evening	good evening! what can i do for you?
+how are you	i am doing great, thank you for asking!
+how are you doing	i am doing well thanks! how about you?
+i am fine	glad to hear that!
+i am good	that is wonderful to hear!
+i am not feeling well	i am sorry to hear that. i hope you feel better soon
+what is your name	i am a deep learning chatbot
+who are you	i am an ai chatbot built with deep learning
+what are you	i am a generative chatbot powered by seq2seq deep learning
+are you a robot	i am an ai assistant here to help you
+are you human	no i am an artificial intelligence assistant
+tell me about yourself	i am a deep learning chatbot trained on conversation data
+what can you do	i can answer questions and have conversations with you
+how do you work	i use a seq2seq lstm model to understand and generate responses
+what is deep learning	deep learning is a subset of machine learning using neural networks
+what is machine learning	machine learning is a way for computers to learn from data
+what is artificial intelligence	ai is the simulation of human intelligence by computer systems
+what is a neural network	a neural network is a model inspired by the human brain
+what is nlp	nlp stands for natural language processing
+what is python	python is a popular programming language used in ai and data science
+what is pytorch	pytorch is a deep learning framework used to build neural networks
+what is tensorflow	tensorflow is a machine learning framework developed by google
+what is a chatbot	a chatbot is an ai program that simulates human conversation
+how do chatbots work	chatbots use nlp and deep learning to understand and respond to text
+tell me a joke	why did the computer go to the doctor? because it had a virus!
+tell me another joke	what do you call a computer that sings? a dell!
+make me laugh	i tried to write a joke about deep learning but i lost the gradient!
+what is the weather	i am not connected to weather services but i hope it is sunny!
+what time is it	i do not have access to a real time clock please check your device
+what is today's date	i cannot access live data but you can check your device!
+what is your favorite color	as an ai i do not have preferences but blue seems calm and nice
+do you have feelings	i do not have real feelings but i am designed to be helpful
+do you dream	i do not sleep so no dreams for me!
+are you smart	i try my best to be helpful and intelligent
+can you learn	i learned from training data but i do not learn during our conversation
+bye	goodbye! have a wonderful day!
+goodbye	see you later! take care!
+see you later	see you! come back anytime
+take care	you too! have a great day!
+thank you	you are welcome! happy to help
+thanks	no problem at all! glad i could assist
+thank you very much	it is my pleasure! have a great day
+you are welcome	glad i could help!
+nice to meet you	nice to meet you too!
+i love you	that is very kind of you!
+are you there	yes i am here and ready to help
+can you help me	of course! what do you need help with?
+i need help	sure! what can i help you with?
+what is the meaning of life	that is a deep philosophical question with many perspectives
+tell me something interesting	did you know octopuses have three hearts?
+what is the capital of france	the capital of france is paris
+what is the capital of usa	the capital of the usa is washington dc
+what is the largest planet	jupiter is the largest planet in our solar system
+what is the speed of light	the speed of light is approximately three hundred thousand kilometers per second
+what is water made of	water is made of two hydrogen atoms and one oxygen atom
+how many planets are there	there are eight planets in our solar system
+who invented the telephone	alexander graham bell is credited with inventing the telephone
+who invented the computer	charles babbage conceived the first mechanical computer
+who is albert einstein	albert einstein was a theoretical physicist known for the theory of relativity
+what is gravity	gravity is a force that attracts objects with mass toward each other
+what is the internet	the internet is a global network of computers sharing information
+what is an algorithm	an algorithm is a set of instructions to solve a problem
+what is coding	coding is writing instructions for a computer to execute
+what is a program	a program is a set of coded instructions that a computer executes
+what is data science	data science involves extracting insights from large datasets
+can you write code	i can discuss programming concepts and help with code ideas
+what languages do you know	i understand english and was trained on english conversation data
+how old are you	i am a new chatbot recently trained on conversation data
+where are you from	i exist digitally trained on data from the internet
+what is your purpose	my purpose is to have helpful conversations and assist you
+i am happy	that is wonderful! what made you happy today?
+i am sad	i am sorry to hear that. would you like to talk about it?
+i am bored	let me help! we can talk or i can share interesting facts
+i am tired	you should rest! taking breaks is important
+i am hungry	i hope you find something delicious to eat!
+i am confused	no worries i am here to help clarify things
+what do you think about ai	ai has incredible potential to help humanity in many ways
+will ai replace humans	ai is a tool to assist humans not replace them entirely
+is ai dangerous	ai can be powerful so responsible development is very important
+what is the future of ai	the future of ai looks exciting with many advances ahead
+what is a large language model	a large language model is an ai trained on vast amounts of text data
+what is gpt	gpt stands for generative pre trained transformer an ai language model
+what is bert	bert is a transformer based language model by google for nlp tasks
+what is a transformer	a transformer is a deep learning architecture using attention mechanisms
+what is an attention mechanism	attention allows the model to focus on relevant parts of the input
+do you have consciousness	i process information but i do not have consciousness or self awareness
+what is the best programming language	it depends on the task! python is great for ai and data science
+how do i learn programming	start with python practice daily and build small projects
+how do i learn ai	study math basics learn python then explore machine learning courses
+what is mathematics	mathematics is the study of numbers shapes and patterns
+what is science	science is the systematic study of the natural world
+what is philosophy	philosophy is the study of fundamental questions about existence
+what is history	history is the study of past events and their significance
+good night	good night! sleep well and sweet dreams!
+have a good day	thank you! hope your day is amazing!
+what can i ask you	you can ask me about ai technology science jokes facts and much more
+tell me a fact	the human brain contains about eighty six billion neurons!
+what is a fact	a fact is a true piece of information supported by evidence
+explain deep learning	deep learning uses multiple layers of neural networks to learn from data
+what is overfitting	overfitting is when a model learns training data too well and fails on new data
+what is underfitting	underfitting is when a model is too simple to capture patterns in data
+what is a loss function	a loss function measures how wrong the model predictions are during training
+what is backpropagation	backpropagation is the algorithm used to update neural network weights during training
+what is an epoch	an epoch is one complete pass through the entire training dataset
+what is a batch	a batch is a subset of training data used in one iteration of training
+what is gradient descent	gradient descent is an optimization algorithm that minimizes the loss function
+what is a learning rate	a learning rate controls how much the model weights change during training
+what is an lstm	lstm stands for long short term memory a type of recurrent neural network
+what is a seq2seq model	seq2seq is an encoder decoder model that maps input sequences to output sequences
+what is tokenization	tokenization is the process of splitting text into individual words or tokens
+what is a word embedding	a word embedding is a vector representation of a word capturing its meaning

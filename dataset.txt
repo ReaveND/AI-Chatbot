@@ -192,3 +192,23 @@ how do i report technical issue	use helpdesk module and include screenshots for 
 erp page not loading	check internet clear browser cache and try again
 can i use erp on mobile	yes you can use mobile browser or official college app
 is my data secure in erp	erp uses role based access and security controls to protect data
+how do i reset my erp password quickly	open login page click forgot password verify your registered email or mobile and set a new strong password
+forgot password otp not received	wait one minute then resend otp and confirm your mobile network or email spam folder
+can i update aadhaar details in profile	yes go to profile documents section upload updated proof and submit verification request
+how to check if my scholarship is approved	open scholarship module and view application status timeline for approved or pending steps
+what should i do if attendance is wrong	raise attendance correction request with subject code date and supporting proof to faculty advisor
+where to download semester grade card	visit results section choose semester and click download grade card in pdf format
+how to apply for leave in erp	open leave management choose leave type dates reason and submit to class advisor
+leave request is pending for long time	contact your advisor or department office and ask them to review the pending leave workflow
+how to update bank account for refund	go to finance profile update account holder details ifsc and account number then submit verification
+how can i know exam form last date	check examination notices and exam registration page for start and closing dates
+my hall ticket shows wrong subject	report immediately to examination cell with your roll number and subject details
+can i pay fees using upi	yes if enabled choose upi in payment gateway complete payment and save transaction receipt
+where can i see payment history	open finance transactions to view date amount payment mode and receipt links
+how to register for clubs and activities	go to campus activities browse open clubs and click join or register during enrollment window
+how to check hostel fee dues	in hostel module open fee tab to view due amount payment status and due date
+erp shows session expired again and again	clear browser cache enable cookies and login again from a stable internet connection
+how to contact support team	use helpdesk ticketing in erp or call the support number listed on the dashboard
+can i access erp outside campus	usually yes with internet access and valid credentials unless maintenance restrictions apply
+where to find internship letters	placement or student services module provides internship request and letter download options
+how to track certificate request status	open certificate requests history to see pending approved rejected and dispatch updates

@@ -114,3 +114,81 @@ what is an lstm	lstm stands for long short term memory a type of recurrent neura
 what is a seq2seq model	seq2seq is an encoder decoder model that maps input sequences to output sequences
 what is tokenization	tokenization is the process of splitting text into individual words or tokens
 what is a word embedding	a word embedding is a vector representation of a word capturing its meaning
+what is college erp	college erp is a system that manages academics attendance fees exams and student records
+what can college erp do	it helps automate admissions attendance timetable exams fees and communication
+how do i reset my erp password	you can use the forgot password option on the erp login page
+i forgot my erp password	please click forgot password and follow the reset link sent to your email
+my erp account is locked	contact the admin office to unlock your account after identity verification
+how do i check attendance	open erp dashboard and go to attendance section for subject wise details
+show my attendance	you can view your attendance percentage in the attendance module
+what is minimum attendance required	most colleges require at least seventy five percent attendance
+can i get attendance shortage details	yes attendance module shows shortage by subject and total percentage
+how to apply for leave in erp	go to leave management select dates add reason and submit request
+where can i see leave status	check leave history in erp to see pending approved or rejected requests
+how do i check timetable	open timetable module to view daily and weekly class schedule
+my timetable is not visible	please refresh the portal or contact timetable coordinator for access
+how to see exam schedule	visit examination module and open exam timetable section
+when are mid sem exams	please check the latest exam calendar in the erp announcements section
+how do i download hall ticket	go to exams module and click download hall ticket when enabled
+how can i see internal marks	internal marks are available under academics or results section
+where can i view semester result	semester results are published in the results tab after evaluation
+how to request revaluation	use exam services and submit revaluation request within deadline
+what is cgpa	cgpa is cumulative grade point average across all completed semesters
+how is sgpa calculated	sgpa is calculated from grade points and credits in one semester
+what is my fee status	open finance module to see paid amount due amount and due date
+how to pay college fees online	use fee payment section choose gateway and complete secure transaction
+can i download fee receipt	yes after payment you can download receipt from transaction history
+why payment is pending	payment gateway confirmation may take time please wait and refresh
+how to apply for scholarship	open scholarship module fill details upload documents and submit form
+where to upload documents	documents can be uploaded in profile or scholarship application section
+which documents are needed for admission	generally mark sheets id proof photos and transfer certificate are required
+how do i update profile	go to profile settings edit details and save changes
+how can i change mobile number	update contact details in profile and verify with otp if required
+how to change email in erp	raise a profile update request if email field is locked
+how can i contact faculty	faculty directory in erp contains email and office hours
+where can i see course materials	check lms or course resources section for notes and assignments
+how to submit assignment	open assignment tab upload file before deadline and confirm submission
+how do i know assignment deadline	assignment module shows deadline submission status and marks
+can i edit assignment after submission	editing depends on faculty settings until deadline
+how to check library books	library module lets you search books and view availability
+how to renew library book	use library renew option before due date to avoid fine
+what is library fine policy	fine is charged per overdue day based on library rules
+how do i book a lab slot	open lab booking choose lab date and available time slot
+how to register for elective	select elective registration in academics during registration window
+i missed elective registration	contact academic office immediately for late registration support
+how to drop a course	course add drop option is available during add drop period
+what is add drop period	it is a short window to add or remove courses after semester starts
+how do i check credits	credit details are visible in curriculum and grade report
+how to see backlog subjects	backlog subjects appear in exam registration and transcript sections
+how to register for supplementary exam	go to exam registration and select supplementary subjects
+when is fee due date	fee due date is shown in finance dashboard and notices
+is installment payment available	installment option depends on college finance policy
+where can i see notices	latest notices are posted on erp home dashboard
+how do i get bonafide certificate	apply from certificate requests and track approval status
+how to request transcript	submit transcript request in student services and pay applicable fee
+how long does transcript take	processing time varies usually a few working days
+how do i apply for hostel	hostel application form is available in campus services module
+where can i check bus route	transport module provides route timing and stop details
+how to report grievance	use grievance redressal module to submit issue and evidence
+how do i track grievance status	grievance history shows current status and remarks
+how can parents view progress	parent portal provides attendance marks fees and notices
+what is mentor meeting	mentor meeting module schedules student mentor interactions
+how to book mentor slot	select mentor booking choose time and confirm appointment
+how to check placement updates	placement cell posts drives and results in placement module
+how do i apply for placement drive	open drive details check criteria and click apply
+where can i upload resume	placement profile section allows resume upload and updates
+how to get no dues certificate	clear pending dues then apply in certificate services
+what is academic calendar	academic calendar lists semester dates holidays exams and events
+when does semester start	please refer to academic calendar for official start date
+how many subjects this semester	registered subjects are shown in academics dashboard
+how do i check subject teacher	subject faculty mapping is available in timetable and course page
+can i message class advisor	yes use internal messaging or advisor contact details in erp
+how to enable notifications	turn on app notifications in settings for announcements and reminders
+how do i download id card	if enabled you can download digital id from profile section
+how to apply for id card correction	raise id correction request with supporting documents
+where can i see disciplinary record	disciplinary details if any are shown in student profile
+how to access alumni portal	graduated students can access alumni portal with registered credentials
+how do i report technical issue	use helpdesk module and include screenshots for faster resolution
+erp page not loading	check internet clear browser cache and try again
+can i use erp on mobile	yes you can use mobile browser or official college app
+is my data secure in erp	erp uses role based access and security controls to protect data

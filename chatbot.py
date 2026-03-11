@@ -239,6 +239,20 @@ class Chatbot:
         if self.encoder is None or self.decoder is None or self.vocab is None:
             return "I can help with admissions, attendance, fees, exams, and timetable queries.\n\nNext step: please verify this in your ERP dashboard.\nIf you want, I can also guide you with the exact menu path in the ERP portal."
 
+        retrieval_response, retrieval_score = self._retrieve_response(cleaned)
+
+        if self.vocab is not None:
+            query_tokens = cleaned.split()
+            unk_count = sum(1 for token in query_tokens if token not in self.vocab.word2index)
+            unk_ratio = unk_count / max(len(query_tokens), 1)
+            if retrieval_response and (retrieval_score >= RETRIEVAL_CONFIDENCE_THRESHOLD or unk_ratio > MAX_UNKNOWN_RATIO):
+                return retrieval_response
+        elif retrieval_response:
+            return retrieval_response
+
+        if self.encoder is None or self.decoder is None or self.vocab is None:
+            return "I can help with admissions, attendance, fees, exams, and timetable queries."
+
         indexes = self.vocab.sentence_to_indexes(cleaned)
         indexes.append(Vocabulary.EOS_token)
         input_tensor = torch.tensor(indexes, dtype=torch.long, device=DEVICE).unsqueeze(0)
@@ -263,6 +277,12 @@ class Chatbot:
             return "I can help with admissions, attendance, fees, exams, and timetable queries.\n\nNext step: please verify this in your ERP dashboard.\nIf you want, I can also guide you with the exact menu path in the ERP portal."
 
         return self._format_response(" ".join(response_words))
+            return retrieval_response
+
+        if len(response_words) < MIN_RESPONSE_LEN:
+            return "I can help with admissions, attendance, fees, exams, and timetable queries."
+
+        return " ".join(response_words)
 
 
 if __name__ == "__main__":

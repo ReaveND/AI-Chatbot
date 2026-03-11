@@ -22,9 +22,9 @@ MODEL_DIR = "saved_model"
 HIDDEN_SIZE = 256
 NUM_LAYERS = 2
 DROPOUT = 0.3
-EPOCHS = 500
+EPOCHS = 350
 BATCH_SIZE = 16
-LEARNING_RATE = 0.001
+LEARNING_RATE = 0.0008
 TEACHER_FORCING_START = 0.7
 TEACHER_FORCING_END = 0.3
 CLIP_GRAD = 1.0
@@ -57,6 +57,22 @@ def load_dataset(path: str):
                 pairs.append((inp, out))
     return pairs
 
+
+
+
+def augment_pairs(pairs):
+    """Simple template augmentation to improve query robustness."""
+    prefixes = [
+        "please tell me",
+        "can you help me with",
+        "i want to know",
+    ]
+    augmented = list(pairs)
+    for inp, out in pairs:
+        if len(inp.split()) <= 8:
+            for prefix in prefixes:
+                augmented.append((preprocess(f"{prefix} {inp}"), out))
+    return augmented
 
 def build_vocab(pairs):
     vocab = Vocabulary()
@@ -150,7 +166,10 @@ def main():
     print(f"Using device: {DEVICE}")
 
     pairs = load_dataset(DATASET_PATH)
-    print(f"Loaded {len(pairs)} conversation pairs")
+    print(f"Loaded {len(pairs)} base conversation pairs")
+
+    pairs = augment_pairs(pairs)
+    print(f"After augmentation: {len(pairs)} conversation pairs")
 
     if len(pairs) < 4:
         raise ValueError("Dataset is too small. Add more conversation pairs before training.")
@@ -174,7 +193,7 @@ def main():
         optimizer, factor=0.5, patience=20
     )
 
-    best_train_loss = float("inf")
+    best_val_loss = float("inf")
     epochs_without_improvement = 0
     os.makedirs(MODEL_DIR, exist_ok=True)
 
@@ -214,8 +233,8 @@ def main():
                 f"TF: {teacher_forcing_ratio:.3f} | LR: {lr_now:.6f}"
             )
 
-        if train_loss < best_train_loss:
-            best_train_loss = train_loss
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
             epochs_without_improvement = 0
             torch.save(encoder.state_dict(), os.path.join(MODEL_DIR, "encoder.pt"))
             torch.save(decoder.state_dict(), os.path.join(MODEL_DIR, "decoder.pt"))
@@ -230,7 +249,7 @@ def main():
             )
             break
 
-    print(f"\nTraining complete! Best train loss: {best_train_loss:.4f}")
+    print(f"\nTraining complete! Best val loss: {best_val_loss:.4f}")
     print(f"Model saved to '{MODEL_DIR}/'")
 
 

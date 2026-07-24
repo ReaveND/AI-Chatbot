@@ -49,8 +49,10 @@ def chat():
         response = bot.respond(user_message)
     except FileNotFoundError as e:
         return jsonify({"error": str(e)}), 503
-    except Exception:
-        return jsonify({"response": "Something went wrong on my end. Please try again."})
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"response": f"Error: {e}"})
 
     return jsonify({"response": response})
 
